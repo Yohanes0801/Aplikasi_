@@ -1,12 +1,17 @@
 package com.uas.lokerapps;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,10 +26,33 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView jobRecyclerView;
     private JobAdapter jobAdapter;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        // Arahkan ke HomeActivity
+                        Intent homeIntent = new Intent(HomeActivity.this, HomeActivity.class);
+                        startActivity(homeIntent);
+                        return true;
+                    case R.id.action_setting:
+                        // Arahkan ke SettingActivity
+                        Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+                        startActivity(settingIntent);
+                        return true;
+                }
+
+                return false;
+            }
+        });
 
         jobRecyclerView = findViewById(R.id.jobRecyclerView);
 

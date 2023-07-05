@@ -92,5 +92,12 @@ public class HomeActivity extends AppCompatActivity {
     private int getResourceId(String resourceName, String resourceType) {
         return getResources().getIdentifier(resourceName, resourceType, getPackageName());
     }
+
+    @Override
+    public void onBackPressed() {
+        // Menutup aplikasi dan memindahkan ke latar belakang
+        moveTaskToBack(true);
+    }
+
 }
 

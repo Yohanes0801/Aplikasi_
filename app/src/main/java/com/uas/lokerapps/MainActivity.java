@@ -1,6 +1,8 @@
 package com.uas.lokerapps;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Mengecek status login menggunakan SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            // Pengguna telah login sebelumnya, buka HomeActivity
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish(); // Menutup MainActivity agar tidak bisa kembali ke halaman login
+        }
 
         usernameEditText = findViewById(R.id.et_username);
         passwordEditText = findViewById(R.id.et_password);
@@ -62,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (validCredentials) {
+                        // Autentikasi berhasil, menyimpan status login menggunakan SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username); // Simpan username
+                        editor.putString("password", password); // Simpan password
+                        editor.putBoolean("isLoggedIn", true); // Simpan status login
+                        editor.apply();
+
                         // Buka HomeActivity
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         startActivity(intent);

@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".SettingActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:textSize="36dp"
+        android:text="@string/datadiri"/>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,31 +23,76 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+
+
             <ImageView
-                android:id="@+id/profileImageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:id="@+id/profileImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:src="@drawable/login"
-                android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="16dp" />
+                android:scaleType="centerCrop"
+                android:layout_marginTop="12dp"
+                android:onClick="openCamera" />
 
             <TextView
-                android:id="@+id/usernameTextView"
-                android:layout_width="wrap_content"
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Admin"
+                android:layout_below="@+id/profileImage"
+                android:gravity="center"
+                android:text="klik gambar untuk edit foto profil"/>
+
+            <EditText
+                android:id="@+id/fullNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editText"
+                android:hint="Nama Lengkap"
+                android:inputType="textPersonName"
+                android:layout_marginTop="16dp"/>
+
+            <EditText
+                android:id="@+id/birthDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fullNameEditText"
+                android:hint="Tanggal Lahir"
+                android:inputType="date"
+                android:layout_marginTop="8dp"/>
+
+            <EditText
+                android:id="@+id/educationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/birthDateEditText"
+                android:hint="Pendidikan Terakhir"
+                android:inputType="text"
+                android:layout_marginTop="8dp"/>
+
+            <EditText
+                android:id="@+id/interestEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/educationEditText"
+                android:inputType="text"
+                android:hint="Hobi"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/profileImageView"
-                android:layout_marginTop="32dp" />
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/interestEditText"
+                android:text="Submit"
+                android:layout_marginTop="16dp"/>
 
             <Button
                 android:id="@+id/logoutButton"
@@ -47,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="Logout"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/usernameTextView"
+                android:layout_below="@id/submitButton"
                 android:layout_marginTop="32dp" />
 
         </RelativeLayout>

@@ -1,16 +1,11 @@
 package com.uas.lokerapps;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-
-import android.view.MenuItem;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,43 +13,37 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RecyclerView jobRecyclerView;
-    private JobAdapter jobAdapter;
-
-    private BottomNavigationView bottomNavigationView;
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_home:
-                        // Arahkan ke HomeActivity
-                        Intent homeIntent = new Intent(HomeActivity.this, HomeActivity.class);
-                        startActivity(homeIntent);
-                        return true;
-                    case R.id.action_setting:
-                        // Arahkan ke SettingActivity
-                        Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
-                        startActivity(settingIntent);
-                        return true;
-                }
-
-                return false;
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) item -> {
+            switch (item.getItemId()) {
+                case R.id.action_home:
+                    // Arahkan ke HomeActivity
+                    Intent homeIntent = new Intent(HomeActivity.this, HomeActivity.class);
+                    startActivity(homeIntent);
+                    return true;
+                case R.id.action_setting:
+                    // Arahkan ke SettingActivity
+                    Intent settingIntent = new Intent(HomeActivity.this, SettingActivity.class);
+                    startActivity(settingIntent);
+                    return true;
             }
+
+            return false;
         });
 
-        jobRecyclerView = findViewById(R.id.jobRecyclerView);
+        RecyclerView jobRecyclerView = findViewById(R.id.jobRecyclerView);
 
         // Mengatur layout manager untuk RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -64,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         List<Job> jobList = createJobListFromJson();
 
         // Inisialisasi adapter dan atur ke RecyclerView
-        jobAdapter = new JobAdapter(jobList);
+        JobAdapter jobAdapter = new JobAdapter(jobList);
         jobRecyclerView.setAdapter(jobAdapter);
     }
 
@@ -73,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
 
         try {
             // Membaca file JSON dari folder assets
-            String json = loadJSONFromAsset("jobs.json");
+            String json = loadJSONFromAsset();
 
             // Parsing data JSON menjadi objek
             JSONArray jsonArray = new JSONArray(json);
@@ -83,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 // Mendapatkan nilai dari setiap kunci JSON
-                int logo = getResourceId(jsonObject.getString("logo"), "drawable");
+                int logo = getResourceId(jsonObject.getString("logo"));
                 String position = jsonObject.getString("position");
                 String company = jsonObject.getString("company");
                 String description = jsonObject.getString("description");
@@ -100,16 +89,16 @@ public class HomeActivity extends AppCompatActivity {
         return jobList;
     }
 
-    private String loadJSONFromAsset(String fileName) {
+    private String loadJSONFromAsset() {
         String json;
         try {
             // Membaca file JSON dari folder assets
-            InputStream inputStream = getAssets().open(fileName);
+            InputStream inputStream = getAssets().open("jobs.json");
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
             inputStream.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -117,8 +106,9 @@ public class HomeActivity extends AppCompatActivity {
         return json;
     }
 
-    private int getResourceId(String resourceName, String resourceType) {
-        return getResources().getIdentifier(resourceName, resourceType, getPackageName());
+    @SuppressLint("DiscouragedApi")
+    private int getResourceId(String resourceName) {
+        return getResources().getIdentifier(resourceName, "drawable", getPackageName());
     }
 
     @Override

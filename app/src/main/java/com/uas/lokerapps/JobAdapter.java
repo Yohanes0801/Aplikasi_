@@ -4,20 +4,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
 
-    private List<Job> jobList;
+    private final List<Job> jobList;
 
     public JobAdapter(List<Job> jobList) {
         this.jobList = jobList;
     }
+
 
     @NonNull
     @Override
@@ -46,6 +54,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder> {
         TextView positionTextView;
         TextView companyTextView;
         TextView descriptionTextView;
+
 
         JobViewHolder(@NonNull View itemView) {
             super(itemView);

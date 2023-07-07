@@ -1,10 +1,11 @@
 package com.uas.lokerapps;
 
 public class Job {
-    private int logo;
-    private String position;
-    private String company;
-    private String description;
+    private final int logo;
+    private final String position;
+    private final String company;
+    private final String description;
+    private boolean isExpanded;
 
     public Job(int logo, String position, String company, String description) {
         this.logo = logo;
@@ -28,5 +29,13 @@ public class Job {
     public String getDescription() {
         return description;
     }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
+
 }
 

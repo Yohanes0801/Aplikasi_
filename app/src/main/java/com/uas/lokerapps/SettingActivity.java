@@ -32,6 +32,7 @@ public class SettingActivity extends AppCompatActivity {
     private EditText educationEditText;
     private EditText interestEditText;
     private Button submitButton;
+    private Button mapsButton;
     private ImageView profileImage;
 
     @Override
@@ -84,6 +85,16 @@ public class SettingActivity extends AppCompatActivity {
         interestEditText = findViewById(R.id.interestEditText);
         submitButton = findViewById(R.id.submitButton);
         profileImage = findViewById(R.id.profileImage);
+        mapsButton = findViewById(R.id.mapsButton);
+
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingActivity.this, MapsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,4 +3,5 @@
     <string name="author">Muhamad Absor Dwiyana</string>
     <string name="link"><a href="https://google.com">Maps</a></string>
     <string name="datadiri"><b>Data Diri</b></string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
